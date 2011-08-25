@@ -13,23 +13,29 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-set background=dark     "I'm on black background on ubuntu
-set bs=2		        " allow backspacing over everything in insert mode
-set ai			        " always set autoindenting on
+set background=dark "I'm on black background on ubuntu
+set bs=2		" allow backspacing over everything in insert mode
+set ai			" always set autoindenting on
 set viminfo='20,\"50	" read/write a .viminfo file, don't store more
-" than 50 lines of registers
-set history=10000	    " keep 50 lines of command line history
-set ruler		        " show the cursor position all the time
+			" than 50 lines of registers
+set history=10000	" keep 50 lines of command line history
+set ruler		" show the cursor position all the time
+
+" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
+" let &guioptions = substitute(&guioptions, "t", "", "g")
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
-" type jk instead of pressing ESC FTW
-:inoremap jk <ESC>
-
-
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
 
 " color theme zenburn both on gui and standard
 colorscheme zenburn
@@ -40,122 +46,124 @@ endif
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-    " In text files, always limit the width of text to 78 characters
-    autocmd BufRead *.txt set tw=78
 
-    augroup cprog
-        " Remove all cprog autocommands
-        au!
+ " In text files, always limit the width of text to 78 characters
+ autocmd BufRead *.txt set tw=78
 
-        " When starting to edit a file:
-        "   For C and C++ files set formatting of comments and set C-indenting on.
-        "   For other files switch it off.
-        "   Don't change the order, it's important that the line with * comes first.
-        autocmd FileType *      set formatoptions=tcql nocindent comments&
-        autocmd FileType c,cpp  set formatoptions=croql cindent comments=sr:/*,mb:*,el:*/,://
-    augroup END
+ augroup cprog
+  " Remove all cprog autocommands
+  au!
 
-    augroup gzip
-        " Remove all gzip autocommands
-        au!
+  " When starting to edit a file:
+  "   For C and C++ files set formatting of comments and set C-indenting on.
+  "   For other files switch it off.
+  "   Don't change the order, it's important that the line with * comes first.
+  autocmd FileType *      set formatoptions=tcql nocindent comments&
+  autocmd FileType c,cpp  set formatoptions=croql cindent comments=sr:/*,mb:*,el:*/,://
+ augroup END
 
-        " Enable editing of gzipped files
-        " set binary mode before reading the file
-        autocmd BufReadPre,FileReadPre	*.gz,*.bz2 set bin
-        autocmd BufReadPost,FileReadPost	*.gz call GZIP_read("gunzip")
-        autocmd BufReadPost,FileReadPost	*.bz2 call GZIP_read("bunzip2")
-        autocmd BufWritePost,FileWritePost	*.gz call GZIP_write("gzip")
-        autocmd BufWritePost,FileWritePost	*.bz2 call GZIP_write("bzip2")
-        autocmd FileAppendPre			*.gz call GZIP_appre("gunzip")
-        autocmd FileAppendPre			*.bz2 call GZIP_appre("bunzip2")
-        autocmd FileAppendPost		*.gz call GZIP_write("gzip")
-        autocmd FileAppendPost		*.bz2 call GZIP_write("bzip2")
+ augroup gzip
+  " Remove all gzip autocommands
+  au!
 
-        " After reading compressed file: Uncompress text in buffer with "cmd"
-        fun! GZIP_read(cmd)
-            " set 'cmdheight' to two, to avoid the hit-return prompt
-            let ch_save = &ch
-            set ch=3
-            " when filtering the whole buffer, it will become empty
-            let empty = line("'[") == 1 && line("']") == line("$")
-            let tmp = tempname()
-            let tmpe = tmp . "." . expand("<afile>:e")
-            " write the just read lines to a temp file "'[,']w tmp.gz"
-            execute "'[,']w " . tmpe
-            " uncompress the temp file "!gunzip tmp.gz"
-            execute "!" . a:cmd . " " . tmpe
-            " delete the compressed lines
-            '[,']d
-            " read in the uncompressed lines "'[-1r tmp"
-            set nobin
-            execute "'[-1r " . tmp
-            " if buffer became empty, delete trailing blank line
-            if empty
-                normal Gdd''
-            endif
-            " delete the temp file
-            call delete(tmp)
-            let &ch = ch_save
-            " When uncompressed the whole buffer, do autocommands
-            if empty
-                execute ":doautocmd BufReadPost " . expand("%:r")
-            endif
-        endfun
+  " Enable editing of gzipped files
+  " set binary mode before reading the file
+  autocmd BufReadPre,FileReadPre	*.gz,*.bz2 set bin
+  autocmd BufReadPost,FileReadPost	*.gz call GZIP_read("gunzip")
+  autocmd BufReadPost,FileReadPost	*.bz2 call GZIP_read("bunzip2")
+  autocmd BufWritePost,FileWritePost	*.gz call GZIP_write("gzip")
+  autocmd BufWritePost,FileWritePost	*.bz2 call GZIP_write("bzip2")
+  autocmd FileAppendPre			*.gz call GZIP_appre("gunzip")
+  autocmd FileAppendPre			*.bz2 call GZIP_appre("bunzip2")
+  autocmd FileAppendPost		*.gz call GZIP_write("gzip")
+  autocmd FileAppendPost		*.bz2 call GZIP_write("bzip2")
 
-        " After writing compressed file: Compress written file with "cmd"
-        fun! GZIP_write(cmd)
-            if rename(expand("<afile>"), expand("<afile>:r")) == 0
-                execute "!" . a:cmd . " <afile>:r"
-            endif
-        endfun
-
-        " Before appending to compressed file: Uncompress file with "cmd"
-        fun! GZIP_appre(cmd)
-            execute "!" . a:cmd . " <afile>"
-            call rename(expand("<afile>:r"), expand("<afile>"))
-        endfun
-
-    augroup END
-
-    " This is disabled, because it changes the jumplist.  Can't use CTRL-O to go
-    " back to positions in previous files more than once.
-    if 0
-        " When editing a file, always jump to the last cursor position.
-        " This must be after the uncompress commands.
-        autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") | exe "normal `\"" | endif
+  " After reading compressed file: Uncompress text in buffer with "cmd"
+  fun! GZIP_read(cmd)
+    " set 'cmdheight' to two, to avoid the hit-return prompt
+    let ch_save = &ch
+    set ch=3
+    " when filtering the whole buffer, it will become empty
+    let empty = line("'[") == 1 && line("']") == line("$")
+    let tmp = tempname()
+    let tmpe = tmp . "." . expand("<afile>:e")
+    " write the just read lines to a temp file "'[,']w tmp.gz"
+    execute "'[,']w " . tmpe
+    " uncompress the temp file "!gunzip tmp.gz"
+    execute "!" . a:cmd . " " . tmpe
+    " delete the compressed lines
+    '[,']d
+    " read in the uncompressed lines "'[-1r tmp"
+    set nobin
+    execute "'[-1r " . tmp
+    " if buffer became empty, delete trailing blank line
+    if empty
+      normal Gdd''
     endif
+    " delete the temp file
+    call delete(tmp)
+    let &ch = ch_save
+    " When uncompressed the whole buffer, do autocommands
+    if empty
+      execute ":doautocmd BufReadPost " . expand("%:r")
+    endif
+  endfun
+
+  " After writing compressed file: Compress written file with "cmd"
+  fun! GZIP_write(cmd)
+    if rename(expand("<afile>"), expand("<afile>:r")) == 0
+      execute "!" . a:cmd . " <afile>:r"
+    endif
+  endfun
+
+  " Before appending to compressed file: Uncompress file with "cmd"
+  fun! GZIP_appre(cmd)
+    execute "!" . a:cmd . " <afile>"
+    call rename(expand("<afile>:r"), expand("<afile>"))
+  endfun
+
+ augroup END
+
+ " This is disabled, because it changes the jumplist.  Can't use CTRL-O to go
+ " back to positions in previous files more than once.
+ if 0
+  " When editing a file, always jump to the last cursor position.
+  " This must be after the uncompress commands.
+   autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") | exe "normal `\"" | endif
+ endif
 
 endif " has("autocmd")
 
-" file encoding
+" encodages des fichiers
 set enc=utf-8
-" terminal encoding
-" set tenc=latin-1
+" encodage des fontes du terminal
+"set tenc=latin-1
 set termencoding=utf-8
 
-" tabulations management
-set tabstop=4       " disply '\t' ash 4 spaces
-set shiftwidth=4    " 4 character spaces
-set expandtab       " replace tabs by spaces (tabs are evil)
+" gestion des tabulations
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
-set incsearch   " incremental search
-set autoindent  " auto indentation
-set gfn=Monospace\ 9 " fonts in gui
-set term=xterm-color " terminal type
-syntax on
+" recherche incrementale
+set incsearch
+set autoindent
+syntax on;
+set gfn=Monospace\ 9
+set term=xterm-color
 
-
-set wrap " wrap text to return to next line text format 
-set showbreak=\ \ 
+" formatage (une seule ligne mais de coupure au milieu des mots)
+set wrap
+set showbreak=...\ 
 set linebreak
 map j gj
-map k gk 
+map k gk
 
-
-:filetype indent on " Auto indent
-:filetype plugin on " Activate plugins
-
-" Autoformat XML when press F2
+" Par defaut on active l'indentation auto
+:filetype indent on
+" Par defaut on active les plugins
+:filetype plugin on
+" Formatage des XML automatiquement quand on appuie sur F2
 map <F2> <Esc>:%!xmllint --format -<CR>
 
 " syntax folding
@@ -163,12 +171,12 @@ let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 set t_Co=256
 
-" Markdown (bluecloth) syntax highlight
+" Syntax pour markdown (bluecloth)
 augroup mkd
     autocmd BufRead *.mkd set ai foratoptions=tcroqn2 comments=n:>
 augroup END
 
-" Spell checking
+" correction orthographique
 if has("spell")
     " Les dictionnaires seront telecharges automatiquement si le repertoire ~/.vim/spell existe
     if !filewritable($HOME."/.vim/spell")
@@ -183,19 +191,18 @@ if has("spell")
     autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd setlocal spell
     autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd setlocal spelllang=fr,en
     " colorisation du la correction orthographique
-    highlight clear SpellBad
-    highlight SpellBad term=standout ctermfg=2 term=underline cterm=underline
-    highlight clear SpellCap
-    highlight SpellCap term=underline cterm=underline
-    highlight clear SpellRare
-    highlight SpellRare term=underline cterm=underline
-    highlight clear SpellLocal
-    highlight SpellLocal term=underline cterm=underline
+   highlight clear SpellBad
+   highlight SpellBad term=standout ctermfg=2 term=underline cterm=underline
+   highlight clear SpellCap
+   highlight SpellCap term=underline cterm=underline
+   highlight clear SpellRare
+   highlight SpellRare term=underline cterm=underline
+   highlight clear SpellLocal
+   highlight SpellLocal term=underline cterm=underline
 endif
 
 :iab czsh <div><code class="zsh"><CR>$<CR></code></div><Esc>kA
 
-" This is just for editing my multilingual format
 autocmd BufRead *latest.md set foldenable
 autocmd BufRead *latest.md set foldlevel=0
 autocmd BufRead *latest.md set foldminlines=0
@@ -206,7 +213,7 @@ autocmd BufRead *latest.md set foldexpr=getline(v:lnum)=~'^en:\ .*$'
 autocmd BufRead *latest.md vsplit  
 autocmd BufRead *latest.md set foldexpr=getline(v:lnum)=~'^fr:\ .*$'
 
-" Objective-J syntax highlighting
+" Couleur pour Objective-J
 autocmd BufReadPre,FileReadPre *.j set ft=objj
 
 " XCODE "
@@ -215,12 +222,12 @@ autocmd BufReadPre,FileReadPre *.j set ft=objj
 set makeprg=osascript\ -e\ \"tell\ application\ \\\"Xcode\\\"\"\ -e\ \"build\"\ -e\ \"end\ tell\"
 
 function! XcodeClean()
-    silent execute ':!osascript -e "tell application \"Xcode\"" -e "Clean" -e "end tell"'
+         silent execute ':!osascript -e "tell application \"Xcode\"" -e "Clean" -e "end tell"'
 endfunction
 command! -complete=command XcodeClean call XcodeClean()
 
 function! XcodeDebug()
-    silent execute '!osascript -e "tell application \"Xcode\"" -e "Debug" -e "end tell"'
+        silent execute '!osascript -e "tell application \"Xcode\"" -e "Debug" -e "end tell"'
 endfunction
 command! -complete=command XcodeDebug call XcodeDebug()
 
@@ -228,3 +235,5 @@ command! -complete=command XcodeDebug call XcodeDebug()
 :noremap <D-k> :XcodeClean<CR>
 " Command-Return Starts the program in the debugger
 :noremap <D-CR> :XcodeDebug<CR>
+
+:inoremap jk <ESC>
