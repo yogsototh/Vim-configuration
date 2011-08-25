@@ -203,11 +203,15 @@ endif
 
 :iab czsh <div><code class="zsh"><CR>$<CR></code></div><Esc>kA
 
-autocmd BufEnter *latest.md execute ":set foldtext=''"
-autocmd BufEnter *latest.md set scrollbind
-autocmd BufEnter *latest.md execute ":HIDE en:*"
-autocmd BufEnter *latest.md vsplit  
-autocmd BufEnter *latest.md execute ":HIDE fr:*"
+autocmd BufRead *latest.md set foldenable
+autocmd BufRead *latest.md set foldlevel=0
+autocmd BufRead *latest.md set foldminlines=0
+autocmd BufRead *latest.md set foldmethod=expr
+autocmd BufRead *latest.md set foldtext=''
+autocmd BufRead *latest.md set scrollbind
+autocmd BufRead *latest.md set foldexpr=getline(v:lnum)=~'^en:\ .*$'
+autocmd BufRead *latest.md vsplit  
+autocmd BufRead *latest.md set foldexpr=getline(v:lnum)=~'^fr:\ .*$'
 
 " Couleur pour Objective-J
 autocmd BufReadPre,FileReadPre *.j set ft=objj
