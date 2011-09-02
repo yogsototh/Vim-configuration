@@ -154,7 +154,7 @@ set term=xterm-color
 
 " formatage (une seule ligne mais de coupure au milieu des mots)
 set wrap
-set showbreak=...\ 
+set showbreak=→\ 
 set linebreak
 map j gj
 map k gk
@@ -237,3 +237,6 @@ command! -complete=command XcodeDebug call XcodeDebug()
 :noremap <D-CR> :XcodeDebug<CR>
 
 :inoremap jk <ESC>
+
+" Copy to the clipboard
+set clipboard=unnamed
