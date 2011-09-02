@@ -21,9 +21,6 @@ set viminfo='20,\"50	" read/write a .viminfo file, don't store more
 set history=10000	" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
-
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
@@ -212,6 +209,7 @@ autocmd BufRead *latest.md set scrollbind
 autocmd BufRead *latest.md set foldexpr=getline(v:lnum)=~'^en:\ .*$'
 autocmd BufRead *latest.md vsplit  
 autocmd BufRead *latest.md set foldexpr=getline(v:lnum)=~'^fr:\ .*$'
+autocmd BufRead *latest.md set spell
 
 " Couleur pour Objective-J
 autocmd BufReadPre,FileReadPre *.j set ft=objj
@@ -236,7 +234,5 @@ command! -complete=command XcodeDebug call XcodeDebug()
 " Command-Return Starts the program in the debugger
 :noremap <D-CR> :XcodeDebug<CR>
 
-:inoremap jk <ESC>
-
-" Copy to the clipboard
-set clipboard=unnamed
+" Can use kj to do an <ESC>
+:inoremap kj <ESC>
