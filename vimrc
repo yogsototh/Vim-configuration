@@ -38,6 +38,7 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
+  set guioptions-=T
 endif
 
 if version>540
