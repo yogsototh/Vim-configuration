@@ -206,7 +206,7 @@ endif
 " Very specific for my blog posts
 " Most people should delete this part
 " If you want to see what it does, simply
-" edit a file named latest.md and start some lines with 'fr: '
+" edit a file named latest.ymd and start some lines with 'fr: '
 " and 'en: '.
 " I use this to maintain a two langage parallel markdown files.
 function! YMarkDown()
@@ -222,7 +222,7 @@ function! YMarkDown()
     set spell
 endfunction
 
-autocmd BufRead *latest.md  call YMarkDown()
+autocmd BufRead *latest.ymd  call YMarkDown()
 
 " Objective-J colors
 autocmd BufReadPre,FileReadPre *.j set ft=objj
