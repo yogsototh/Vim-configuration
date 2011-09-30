@@ -1,7 +1,7 @@
-" An example for a vimrc file.
+" Maintainer: Yann Esposito
 "
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2000 Mar 29
+" Inspired from a .vimrc file by
+" Bram Moolenaar <Bram@vim.org>
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -13,13 +13,19 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-set background=dark "I'm on black background on ubuntu
-set bs=2		" allow backspacing over everything in insert mode
-set ai			" always set autoindenting on
-set viminfo='20,\"50	" read/write a .viminfo file, don't store more
-			" than 50 lines of registers
-set history=10000	" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
+set background=dark     " I'm on black background on ubuntu
+set bs=2		        " allow backspacing over everything in insert mode
+set ai			        " always set autoindenting on
+set viminfo='20,\"50    " read/write a .viminfo file, don't store more
+			            " than 50 lines of registers
+set history=10000	    " keep 50 lines of command line history
+set ruler		        " show the cursor position all the time
+
+
+colorscheme zenburn     " color theme zenburn both on gui and standard
+
+" Can use kj to do an <ESC>
+:inoremap kj <ESC>      
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -33,9 +39,6 @@ if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
 endif
-
-" color theme zenburn both on gui and standard
-colorscheme zenburn
 
 if version>540
     autocmd!
@@ -137,30 +140,30 @@ set enc=utf-8
 "set tenc=latin-1
 set termencoding=utf-8
 
-" gestion des tabulations
+" Tabulation management
 set tabstop=4
 set shiftwidth=4
 set expandtab
 
-" recherche incrementale
+" Incremental search
 set incsearch
-set autoindent
 syntax on;
 set gfn=Monospace\ 9
 set term=xterm-color
 
-" formatage (une seule ligne mais de coupure au milieu des mots)
+" format
+" wrap lines and start the following lines by '→ '.
 set wrap
-set showbreak=...\ 
+set showbreak=→\ 
 set linebreak
 map j gj
 map k gk
 
-" Par defaut on active l'indentation auto
+" Auto indent by default
 :filetype indent on
-" Par defaut on active les plugins
+" Active plugins
 :filetype plugin on
-" Formatage des XML automatiquement quand on appuie sur F2
+" Type of F2 to reformat XML files
 map <F2> <Esc>:%!xmllint --format -<CR>
 
 " syntax folding
@@ -168,7 +171,7 @@ let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 set t_Co=256
 
-" Syntax pour markdown (bluecloth)
+" Markdown Syntax (BlueCloth)
 augroup mkd
     autocmd BufRead *.mkd set ai foratoptions=tcroqn2 comments=n:>
 augroup END
@@ -200,6 +203,12 @@ endif
 
 :iab czsh <div><code class="zsh"><CR>$<CR></code></div><Esc>kA
 
+" Very specific for my blog posts
+" Most people should delete this part
+" If you want to see what it does, simply
+" edit a file named latest.md and start some lines with 'fr: '
+" and 'en: '.
+" I use this to maintain a two langage parallel markdown files.
 function! YMarkDown()
     set foldenable
     set foldlevel=0
@@ -215,7 +224,7 @@ endfunction
 
 autocmd BufRead *latest.md  call YMarkDown()
 
-" Couleur pour Objective-J
+" Objective-J colors
 autocmd BufReadPre,FileReadPre *.j set ft=objj
 
 " XCODE "
