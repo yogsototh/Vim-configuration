@@ -6,5 +6,6 @@ endif
 augroup markdown
     au! BufRead,BufNewFile *.mkd   setfiletype mkd
     au! BufRead,BufNewFile *.md    setfiletype mkd
+    au! BufRead,BufNewFile *.ymd   setfiletype ymkd
     au! BufRead,BufNewFile *.ru    setfiletype ruby
 augroup END

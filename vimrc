@@ -223,19 +223,23 @@ endif
 " Very specific for my blog posts
 " Most people should delete this part
 " If you want to see what it does, simply
-" edit a file named latest.md and start some lines with 'fr: '
+" edit a file named latest.ymd and start some lines with 'fr: '
 " and 'en: '.
 " I use this to maintain a two langage parallel markdown files.
-autocmd BufRead *latest.md set foldenable
-autocmd BufRead *latest.md set foldlevel=0
-autocmd BufRead *latest.md set foldminlines=0
-autocmd BufRead *latest.md set foldmethod=expr
-autocmd BufRead *latest.md set foldtext=''
-autocmd BufRead *latest.md set scrollbind
-autocmd BufRead *latest.md set foldexpr=getline(v:lnum)=~'^en:\ .*$'
-autocmd BufRead *latest.md vsplit  
-autocmd BufRead *latest.md set foldexpr=getline(v:lnum)=~'^fr:\ .*$'
-autocmd BufRead *latest.md set spell
+function! YMarkDown()
+    set foldenable
+    set foldlevel=0
+    set foldminlines=0
+    set foldmethod=expr
+    set foldtext=''
+    set scrollbind
+    set foldexpr=getline(v:lnum)=~'^en:\ .*$'
+    vsplit  
+    set foldexpr=getline(v:lnum)=~'^fr:\ .*$'
+    set spell
+endfunction
+
+autocmd BufRead *latest.ymd  call YMarkDown()
 
 " Objective-J colors
 autocmd BufReadPre,FileReadPre *.j set ft=objj
@@ -260,3 +264,32 @@ command! -complete=command XcodeDebug call XcodeDebug()
 " Command-Return Starts the program in the debugger
 :noremap <D-CR> :XcodeDebug<CR>
 
+:inoremap kj <ESC>
+ 
+" Change cursor color for mode 
+"if &term =~ "xterm\\|rxvt"
+"    " use an orange cursor in insert mode
+"    let &t_SI = "\<Esc>]12;orange\x7"
+"    " use a red cursor otherwise
+"    let &t_EI = "\<Esc>]12;white\x7"
+"    silent !echo -ne "\033]12;white\007"
+"    " reset cursor when vim exits
+"    autocmd VimLeave * silent !echo -ne "\033]12;white\007"
+"    " use \003]12;gray\007 for gnome-terminal
+"endif
+
+" Haskell
+if has("gui_running")
+    au BufEnter *.hs compiler ghc
+    " Configure browser for haskell_doc.vim
+endif
+if has("unix")
+    let s:uname = system("uname")
+    if s:uname == "Darwin"
+        let g:haddock_browser = "open"
+        let g:haddock_browser_callformat = "%s %s"
+    else
+        let g:haddock_browser = "/usr/bin/firefox"
+        let g:haddock_browser_callformat = "%s %s"
+    endif
+endif
