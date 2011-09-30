@@ -38,7 +38,23 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
-  set guioptions-=T
+endif
+
+" Set in no distraction mode
+set guifont=Menlo:h15
+set guioptions-=T " remove Toolbar
+set guioptions-=r " remove right scrollbar ORLY?
+set guioptions-=R " YEAH RLY.
+set fuoptions=background:#002E3330
+if has("gui_running")
+  " Go fullscreen
+  " set fuoptions=maxvert,maxhorz
+  set lines=40
+  set columns=80
+  nmap <F13> :set nofu<Return>:set fu<Return>:set lines=100<Return>:set columns=300<Return>
+  nmap <F14> :set nofu<Return>:set fu<Return>:set lines=50<Return>:set columns=100<Return>
+  imap <F13> <ESC>:set nofu<Return>:set fu<Return>:set lines=100<Return>:set columns=300<Return>
+  imap <F14> <ESC>:set nofu<Return>:set fu<Return>:set lines=50<Return>:set columns=100<Return>
 endif
 
 if version>540
