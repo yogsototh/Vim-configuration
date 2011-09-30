@@ -1,1 +1,2 @@
 twitvim-0.4.1.vba: call delete('/home/e640846/.vim/plugin/twitvim.vim')|call delete('/home/e640846/.vim/doc/twitvim.txt')
+haskellmode-20101118.vba: call delete('/home/e640846/.vim/compiler/ghc.vim')|call delete('/home/e640846/.vim/ftplugin/haskell.vim')|call delete('/home/e640846/.vim/ftplugin/haskell_doc.vim')|call delete('/home/e640846/.vim/ftplugin/haskell_hpaste.vim')|call delete('/home/e640846/.vim/autoload/haskellmode.vim')|call delete('/home/e640846/.vim/doc/haskellmode.txt')
