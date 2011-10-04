@@ -40,6 +40,36 @@ if &t_Co > 2 || has("gui_running")
   set hlsearch
 endif
 
+" Set in no distraction mode
+function! NoDistractionModeSwitch()
+    set guifont=Menlo:h15
+    set fu
+    set lines=100
+    set columns=200
+endfunction
+
+function! DistractionModeSwitch()
+    set guifont=Menlo:h13
+    set nofu
+    set lines=50
+    set columns=100
+endfunction
+
+set guioptions-=T " remove Toolbar
+set guioptions-=r " remove right scrollbar ORLY?
+set guioptions-=R " YEAH RLY.
+if has("gui_running")
+  set fuoptions=background:#002E3330
+  " Go fullscreen
+  " set fuoptions=maxvert,maxhorz
+  set lines=40
+  set columns=80
+  nmap <F13> :call NoDistractionModeSwitch()<Return>
+  nmap <F14> :call DistractionModeSwitch()<Return>
+  imap <F13> <ESC>:call NoDistractionModeSwitch()<Return>
+  imap <F14> <ESC>:call DistractionModeSwitch()<Return>
+endif
+
 if version>540
     autocmd!
 endif
@@ -210,6 +240,7 @@ endif
 " and 'en: '.
 " I use this to maintain a two langage parallel markdown files.
 function! YMarkDown()
+    set filetype=ymkd
     set foldenable
     set foldlevel=0
     set foldminlines=0
@@ -222,7 +253,8 @@ function! YMarkDown()
     set spell
 endfunction
 
-autocmd BufRead *.ymd  call YMarkDown()
+autocmd BufRead,BufNewFile *.ymd  call YMarkDown()
+autocmd BufRead,BufNewFile *.ymkd  call YMarkDown()
 
 " Objective-J colors
 autocmd BufReadPre,FileReadPre *.j set ft=objj
@@ -276,3 +308,4 @@ if has("unix")
         let g:haddock_browser_callformat = "%s %s"
     endif
 endif
+
