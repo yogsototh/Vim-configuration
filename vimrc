@@ -222,7 +222,7 @@ function! YMarkDown()
     set spell
 endfunction
 
-autocmd BufRead *latest.ymd  call YMarkDown()
+autocmd BufRead *.ymd  call YMarkDown()
 
 " Objective-J colors
 autocmd BufReadPre,FileReadPre *.j set ft=objj
