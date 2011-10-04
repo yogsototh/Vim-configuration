@@ -13,5 +13,7 @@ hi def link yamlBlock Comment
 hi def link codeBlock Special
 
 syn match ylang "^..: "
-hi def link ylang PreProc
+hi def link ylang Comment
+syn match yfrlang "^fr: "
+hi def link yfrlang PreProc
 let b:current_syntax = "ymkd"
