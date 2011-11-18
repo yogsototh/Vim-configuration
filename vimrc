@@ -293,19 +293,3 @@ command! -complete=command XcodeDebug call XcodeDebug()
 "    " use \003]12;gray\007 for gnome-terminal
 "endif
 
-" Haskell
-if has("gui_running")
-    au BufEnter *.hs compiler ghc
-    " Configure browser for haskell_doc.vim
-endif
-if has("unix")
-    let s:uname = system("uname")
-    if s:uname == "Darwin"
-        let g:haddock_browser = "open"
-        let g:haddock_browser_callformat = "%s %s"
-    else
-        let g:haddock_browser = "/usr/bin/firefox"
-        let g:haddock_browser_callformat = "%s %s"
-    endif
-endif
-
