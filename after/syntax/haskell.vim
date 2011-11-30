@@ -36,15 +36,42 @@ endif
 
 " vim: set fenc=utf-8:
 syntax match hsNiceOperator "\\\ze[[:alpha:][:space:]_([]" conceal cchar=λ
-syntax match hsNiceOperator "<-" conceal cchar=←
-syntax match hsNiceOperator "->" conceal cchar=→
-syntax match hsNiceOperator "\<sum\>" conceal cchar=∑
-syntax match hsNiceOperator "\<product\>" conceal cchar=∏ 
+
+" syntax match hsNiceOperator "<-" conceal cchar=←
+syn match HaskLeftArrow    '<-'  contains=HaskLeftArrowOne,HaskLeftArrowTwo containedin=hsOperator
+syn match HaskLeftArrowOne '<'   conceal contained cchar=←
+syn match HaskLeftArrowTwo '-'   conceal contained cchar= 
+
+" syntax match hsNiceOperator "->" conceal cchar=→
+syn match HaskRightArrow    '->'  contains=HaskRightArrowOne,HaskRightArrowTwo containedin=hsOperator
+syn match HaskRightArrowOne '-'   conceal contained cchar=→
+syn match HaskRightArrowTwo '>'   conceal contained cchar= 
+
+syntax match HaskDifferent "\/=" contains=HaskDifferentOne,HaskDifferentTwo containedin=hsOperator
+syntax match HaskDifferentOne '/' conceal cchar=≠  containedin=HaskDifferent contained
+syntax match HaskDifferentTwo '='  conceal cchar=  containedin=HaskDifferent contained
+
+" syntax match hsNiceOperator ">>" conceal cchar=»
+" syntax match hsNiceOperator "== conceal cchar=≡
+
+" syntax match hsNiceOperator "\<sum\>" conceal cchar=∑
+syntax match HaskSum "\<sum\>" contains=HaskSumOne,HaskSumTwo,HaskSumThree containedin=hsOperator
+syntax match HaskSumOne   "s" conceal cchar=  containedin=HaskSum contained
+syntax match HaskSumTwo   "u" conceal cchar=∑ containedin=HaskSum contained
+syntax match HaskSumThree "m" conceal cchar=  containedin=HaskSum contained
+
+" syntax match hsNiceOperator "\<product\>" conceal cchar=∏ 
+syntax match HaskProd "\<product\>" contains=HaskProdH,HaskProdS containedin=hsOperator
+syntax match HaskProdH "p" conceal cchar=  containedin=HaskProd contained
+syntax match HaskProdH "r" conceal cchar=  containedin=HaskProd contained
+syntax match HaskProdS "o" conceal cchar=  containedin=HaskProd contained
+syntax match HaskProdH "d" conceal cchar=∏ containedin=HaskProd contained
+syntax match HaskProdH "u" conceal cchar=  containedin=HaskProd contained
+syntax match HaskProdH "c" conceal cchar=  containedin=HaskProd contained
+syntax match HaskProdH "t" conceal cchar=  containedin=HaskProd contained
+
 syntax match hsNiceOperator "\<sqrt\>" conceal cchar=√ 
 syntax match hsNiceOperator "\<pi\>" conceal cchar=π
-syntax match hsNiceOperator "==" conceal cchar=≡
-syntax match hsNiceOperator "\/=" conceal cchar=≠
-syntax match hsNiceOperator ">>" conceal cchar=»
 
 let s:extraConceal = 1
 " Some windows font don't support some of the characters,
