@@ -22,7 +22,8 @@ set history=10000	    " keep 50 lines of command line history
 set ruler		        " show the cursor position all the time
 
 
-colorscheme zenburn     " color theme zenburn both on gui and standard
+colorscheme solarized     " color theme zenburn both on gui and standard
+" colorscheme zenburn     " color theme zenburn both on gui and standard
 
 " Can use kj to do an <ESC>
 :inoremap kj <ESC>      
@@ -38,6 +39,7 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
+  set guifont=:h16
 endif
 
 " Set in no distraction mode
@@ -59,15 +61,13 @@ set guioptions-=T " remove Toolbar
 set guioptions-=r " remove right scrollbar ORLY?
 set guioptions-=R " YEAH RLY.
 if has("gui_running")
-  set fuoptions=background:#002E3330
   " Go fullscreen
   " set fuoptions=maxvert,maxhorz
   set lines=40
   set columns=80
-  nmap <F13> :call NoDistractionModeSwitch()<Return>
-  nmap <F14> :call DistractionModeSwitch()<Return>
-  imap <F13> <ESC>:call NoDistractionModeSwitch()<Return>
-  imap <F14> <ESC>:call DistractionModeSwitch()<Return>
+  :command NoDistract  :call NoDistractionModeSwitch()<Return>
+  :command Distract    :call DistractionModeSwitch()<Return>
+  set fuoptions=background:#002E3330
 endif
 
 if version>540
@@ -178,7 +178,7 @@ set expandtab
 " Incremental search
 set incsearch
 syntax on;
-set gfn=Monospace\ 9
+set gfn=Monospace\ 14
 set term=xterm-color
 
 " format
@@ -278,18 +278,8 @@ command! -complete=command XcodeDebug call XcodeDebug()
 :noremap <D-k> :XcodeClean<CR>
 " Command-Return Starts the program in the debugger
 :noremap <D-CR> :XcodeDebug<CR>
+:noremap <left> :bp<CR>
+:noremap <right> :bn<CR>
 
-:inoremap kj <ESC>
- 
-" Change cursor color for mode 
-"if &term =~ "xterm\\|rxvt"
-"    " use an orange cursor in insert mode
-"    let &t_SI = "\<Esc>]12;orange\x7"
-"    " use a red cursor otherwise
-"    let &t_EI = "\<Esc>]12;white\x7"
-"    silent !echo -ne "\033]12;white\007"
-"    " reset cursor when vim exits
-"    autocmd VimLeave * silent !echo -ne "\033]12;white\007"
-"    " use \003]12;gray\007 for gnome-terminal
-"endif
-
+" Colorize column 81
+:set colorcolumn=81
