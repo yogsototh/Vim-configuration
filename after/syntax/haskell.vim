@@ -100,11 +100,6 @@ if s:extraConceal
     syntax match hsNiceOperator "=>" conceal cchar=⇒
     syntax match hsNiceOperator "=\zs<<" conceal cchar=«
 
-    " Redfining to get proper '::' concealing
-    syntax match hs_DeclareFunction /^[a-z_(]\S*\(\s\|\n\)*::/me=e-2 nextgroup=hsNiceOperator contains=hs_FunctionName,hs_OpFunctionName
-    syntax match hsNiceOperator "\:\:" conceal cchar=∷
-
-    syntax match hsniceoperator "++" conceal cchar=⧺
     syntax match hsNiceOperator "\<forall\>" conceal cchar=∀
     syntax match hsNiceOperator "-<" conceal cchar=↢
     syntax match hsNiceOperator ">-" conceal cchar=↣
@@ -115,7 +110,7 @@ if s:extraConceal
 
     " Only replace the dot, avoid taking spaces around.
     syntax match hsNiceOperator /\s\.\s/ms=s+1,me=e-1 conceal cchar=∘
-    syntax match hsNiceOperator "\.\." conceal cchar=‥
+    " syntax match hsNiceOperator "\.\." conceal cchar=‥
 
     syntax match hsQQEnd "|\]" contained conceal cchar=〛
     " sy match hsQQEnd "|\]" contained conceal=〚
