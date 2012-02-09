@@ -22,7 +22,7 @@ set history=10000	    " keep 50 lines of command line history
 set ruler		        " show the cursor position all the time
 
 
-colorscheme zenburn     " color theme zenburn both on gui and standard
+colorscheme solarized   " color theme solarized both on gui and standard
 
 " Can use kj to do an <ESC>
 :inoremap kj <ESC>      
