@@ -67,7 +67,7 @@ if has("gui_running")
   set columns=80
   :command NoDistract  :call NoDistractionModeSwitch()<Return>
   :command Distract    :call DistractionModeSwitch()<Return>
-  set fuoptions=background:#002E3330
+  " set fuoptions=background:#002E3330
 endif
 
 if version>540
@@ -283,3 +283,28 @@ command! -complete=command XcodeDebug call XcodeDebug()
 
 " Colorize column 81
 :set colorcolumn=81
+
+""" FocusMode
+function! ToggleFocusMode()
+  if (&foldcolumn != 12)
+    set laststatus=0
+    set numberwidth=10
+    set foldcolumn=12
+    set noruler
+    " hi FoldColumn ctermbg=none
+    " hi LineNr ctermfg=0 ctermbg=none
+    " hi NonText ctermfg=0
+  else
+    set laststatus=2
+    set numberwidth=4
+    set foldcolumn=0
+    set ruler
+    colorscheme solarized "re-call your colorscheme
+  endif
+endfunc
+nnoremap <F6> :call ToggleFocusMode()<cr>
+
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
