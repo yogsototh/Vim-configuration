@@ -97,7 +97,12 @@ if s:extraConceal
     syntax match hsNiceOperator "<=\ze[^<]" conceal cchar=≲
     syntax match hsNiceOperator ">=\ze[^>]" conceal cchar=≳
 
-    syntax match hsNiceOperator "=>" conceal cchar=⇒
+    " syntax match hsNiceOperator "->" conceal cchar=→
+    syn match HaskBigRightArrow    '=>'  contains=HaskBigRightArrowOne,HaskBigRightArrowTwo containedin=hsOperator
+    syn match HaskBigRightArrowOne '='   conceal contained cchar=⇒
+    syn match HaskBigRightArrowTwo '>'   conceal contained cchar= 
+    " OLD: syntax match hsNiceOperator "=>" conceal cchar=⇒
+    
     syntax match hsNiceOperator "=\zs<<" conceal cchar=«
 
     syntax match hsNiceOperator "\<forall\>" conceal cchar=∀
