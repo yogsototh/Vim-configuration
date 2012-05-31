@@ -36,9 +36,13 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-  set guifont=:h16
+    syntax on
+    set hlsearch
+    if has("mac")
+        set guifont=Menlo:h15
+    else
+        set guifont=:h16
+    endif
 endif
 
 " Set in no distraction mode
