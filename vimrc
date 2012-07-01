@@ -50,7 +50,7 @@ function! NoDistractionModeSwitch()
     set guifont=Menlo:h15
     set fu
     set lines=100
-    set columns=200
+    set columns=120
 endfunction
 
 function! DistractionModeSwitch()
@@ -221,8 +221,8 @@ if has("spell")
     noremap ,se :setlocal spell spelllang=en <CR>
     noremap ,sn :setlocal nospell <CR>
     " On active automatiquement le mode spell pour les fichiers texte et LaTeX
-    autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd setlocal spell
-    autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd setlocal spelllang=fr,en
+    autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd,*.lhs setlocal spell
+    autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd,*.lhs setlocal spelllang=fr,en
     " colorisation du la correction orthographique
    highlight clear SpellBad
    highlight SpellBad term=standout ctermfg=2 term=underline cterm=underline
@@ -234,7 +234,8 @@ if has("spell")
    highlight SpellLocal term=underline cterm=underline
 endif
 
-:iab czsh <div><code class="zsh"><CR>$<CR></code></div><Esc>kA
+:iab ccc <div><code class="zsh"><CR><CR></code></div><Esc>kA
+:iab èè `
 
 " Very specific for my blog posts
 " Most people should delete this part
