@@ -314,3 +314,7 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
 map <F5> ysiw`
+
+" --- PLUGIN --
+"  neocomplcache (advanced completion)
+let g:neocomplcache_enable_at_startup = 1
