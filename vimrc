@@ -13,7 +13,7 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-set background=dark     " I'm on black background on ubuntu
+set background=light    " I'm on black background on ubuntu
 set bs=2		        " allow backspacing over everything in insert mode
 set ai			        " always set autoindenting on
 set viminfo='20,\"50    " read/write a .viminfo file, don't store more
@@ -36,9 +36,13 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-  set guifont=:h16
+    syntax on
+    set hlsearch
+    if has("mac")
+        set guifont=Menlo:h15
+    else
+        set guifont=:h16
+    endif
 endif
 
 " Set in no distraction mode
@@ -46,7 +50,7 @@ function! NoDistractionModeSwitch()
     set guifont=Menlo:h15
     set fu
     set lines=100
-    set columns=200
+    set columns=120
 endfunction
 
 function! DistractionModeSwitch()
@@ -230,7 +234,8 @@ if has("spell")
    highlight SpellLocal term=underline cterm=underline
 endif
 
-:iab czsh <div><code class="zsh"><CR>$<CR></code></div><Esc>kA
+:iab ccc <div><code class="zsh"><CR><CR></code></div><Esc>kA
+:iab èè `
 
 " Very specific for my blog posts
 " Most people should delete this part
@@ -313,3 +318,7 @@ map <F5> ysiw`
 imap èè `
 
 let NERDTreeIgnore=['\.o$','\~$','\.hi$']
+
+" --- PLUGIN --
+"  neocomplcache (advanced completion)
+let g:neocomplcache_enable_at_startup = 1
