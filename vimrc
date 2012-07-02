@@ -217,8 +217,8 @@ if has("spell")
     noremap ,se :setlocal spell spelllang=en <CR>
     noremap ,sn :setlocal nospell <CR>
     " On active automatiquement le mode spell pour les fichiers texte et LaTeX
-    autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd setlocal spell
-    autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd setlocal spelllang=fr,en
+    autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd,*.lhs setlocal spell
+    autocmd BufEnter *.txt,*.tex,*.html,*.md,*.ymd,*.lhs setlocal spelllang=fr,en
     " colorisation du la correction orthographique
    highlight clear SpellBad
    highlight SpellBad term=standout ctermfg=2 term=underline cterm=underline
@@ -252,6 +252,7 @@ function! YMarkDown()
     set spell
 endfunction
 
+" autocmd BufRead,BufNewFile *.lhs  call YMarkDown()
 autocmd BufRead,BufNewFile *.ymd  call YMarkDown()
 autocmd BufRead,BufNewFile *.ymkd  call YMarkDown()
 
@@ -309,3 +310,6 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
 map <F5> ysiw`
+imap èè `
+
+let NERDTreeIgnore=['\.o$','\~$','\.hi$']
