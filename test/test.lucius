@@ -1,0 +1,35 @@
+/*
+ * Lucius
+ */
+
+/* Css: */
+
+  body { font: 'Helvetica'; }
+
+/* Interpolation: */
+
+  div#something { background: url(@{RouteR foo}) repeat 10 10; }
+
+  span.something_else { font: "#{myFont}" }
+
+  .#{idAsVar} { }
+
+  ##{clasAsVar} { }
+
+/* Nested (TODO): */
+
+  .some {
+    .nested {
+
+    }
+
+    .classes {
+
+    }
+  }
+
+/* Lucius variables (TODO): */
+
+  @textcolor: #ccc; /* just because we hate our users */
+  body { color: #{textcolor} }
+  a:link, a:visited { color: #{textcolor} }

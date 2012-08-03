@@ -1,0 +1,100 @@
+$#
+$# Hamlet file:
+$#
+
+$# Comments:
+
+  <!-- examples taken from http://www.yesodweb.com/book/templates -->
+
+$# Tags should be highlighted:
+
+  <body>
+    <p>Some paragraph.
+    <ul>
+      <li>Item 1
+      <li>Item 2
+
+$# Trailing space is made more visible:
+
+    <p>Paragraph 
+    <i>italic
+    \ end
+
+$# Inline tags are valid too? (TODO):
+
+    <p>Paragraph <i>italic</i> end.
+
+$# Interpolation
+
+  <p>Hello, my name is #{name person} and I am #{show $ age person}.
+  <p>
+    Let's do some funny stuff with my name: 
+    <b>#{sort $ map toLower (name person)}
+
+  <p>Oh, and in 5 years I'll be #{show ((+) (age person) 5)} years old.
+
+  <footer>
+    Return to 
+    <a href=@{Home}>Homepage
+    .
+
+  <body>
+    <p>This is my page.
+    ^{footer}
+
+$# Attributes:
+
+  <input type=checkbox checked>
+
+  <p #paragraphid .class1 .class2>
+
+$# Conditional attributes:
+
+  <input type=checkbox :isChecked:checked .other>
+
+  <p :isRed:style="color: red;" #other>
+
+$# Logic:
+
+  $if isAdmin
+    <p>...
+  $elseif isLoggedIn
+    <p>...
+  $else
+    <p>...
+
+  $maybe name <- maybeName
+    <p>...
+  $nothing
+    <p>...
+
+  $maybe Person firstName lastName <- maybePerson
+    <p>...
+
+  <ul>
+    $forall person <- people
+      <li>#{person}
+
+  $case foo
+    $of Left bar
+      <p>...
+    $of Right baz
+      <p>...
+
+  $with foo <- some very (long ugly) expression that $ should only $ happen once
+    <p>But I'm going to use #{foo} multiple times. #{foo}
+
+$# i18n:
+
+$doctype 5
+<html>
+  <head>
+    <title>i18n
+  <body>
+    <h1>_{Hello}
+    <p>_{Apples count}
+
+$# new attrs syntax
+
+<p *{attrs} #{var}>
+
