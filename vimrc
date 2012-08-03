@@ -182,7 +182,6 @@ set expandtab
 set incsearch
 syntax on;
 set gfn=Monospace\ 14
-set term=xterm-color
 
 " format
 " wrap lines and start the following lines by '→ '.
@@ -322,3 +321,9 @@ let NERDTreeIgnore=['\.o$','\~$','\.hi$']
 " --- PLUGIN --
 "  neocomplcache (advanced completion)
 let g:neocomplcache_enable_at_startup = 1
+
+
+" set term=xterm-color
+set term=screen-256color
+let g:solarized_termcolors=256
+se t_Co=256
