@@ -15,7 +15,6 @@ set nocompatible
 
 set background=light    " I'm on black background on ubuntu
 set bs=2		        " allow backspacing over everything in insert mode
-set ai			        " always set autoindenting on
 set viminfo='20,\"50    " read/write a .viminfo file, don't store more
 			            " than 50 lines of registers
 set history=10000	    " keep 50 lines of command line history
@@ -25,7 +24,7 @@ set ruler		        " show the cursor position all the time
 colorscheme solarized   " color theme solarized both on gui and standard
 
 " Can use kj to do an <ESC>
-:inoremap kj <ESC>      
+:inoremap kj <ESC>
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -176,7 +175,11 @@ set termencoding=utf-8
 " Tabulation management
 set tabstop=4
 set shiftwidth=4
-set expandtab
+set smarttab
+" set expandtab
+set autoindent
+set smartindent
+
 
 " Incremental search
 set incsearch
@@ -186,7 +189,7 @@ set gfn=Monospace\ 14
 " format
 " wrap lines and start the following lines by '→ '.
 set wrap
-set showbreak=→\ 
+set showbreak=→\
 set linebreak
 map j gj
 map k gk
@@ -251,7 +254,7 @@ function! YMarkDown()
     set foldtext=''
     set scrollbind
     set foldexpr=getline(v:lnum)=~'^en:\ .*$'
-    vsplit  
+    vsplit
     set foldexpr=getline(v:lnum)=~'^fr:\ .*$'
     set spell
 endfunction
