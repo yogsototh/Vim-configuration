@@ -176,7 +176,7 @@ set termencoding=utf-8
 set tabstop=4
 set shiftwidth=4
 set smarttab
-" set expandtab
+set expandtab
 set autoindent
 set smartindent
 
