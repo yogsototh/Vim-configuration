@@ -173,12 +173,15 @@ set enc=utf-8
 set termencoding=utf-8
 
 " Tabulation management
+set noexpandtab
 set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 set smarttab
-set expandtab
 set autoindent
 set smartindent
+set cindent
+set cinoptions=(0,u0,U0
 
 
 " Incremental search
