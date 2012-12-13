@@ -333,3 +333,9 @@ let g:neocomplcache_enable_at_startup = 1
 set term=screen-256color
 let g:solarized_termcolors=256
 se t_Co=256
+
+
+" -- Haskell
+au Bufenter *.hs compiler ghc
+au Bufenter *.lhs compiler ghc
+let g:haddock_browser="/usr/bin/firefox"
