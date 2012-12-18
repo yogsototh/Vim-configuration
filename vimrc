@@ -324,7 +324,17 @@ imap èè `
 
 let NERDTreeIgnore=['\.o$','\~$','\.hi$']
 
-" --- PLUGIN --
+" --- Plugins ---
+filetype off
+set rtp+=~/.vim/vundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+Bundle 'Twinside/vim-haskellFold'
+Bundle 'Twinside/vim-hoogle'
+filetype on
+
+" --- Plugin conf ---
+
 "  neocomplcache (advanced completion)
 let g:neocomplcache_enable_at_startup = 1
 
@@ -339,3 +349,4 @@ se t_Co=256
 au Bufenter *.hs compiler ghc
 au Bufenter *.lhs compiler ghc
 let g:haddock_browser="/usr/bin/firefox"
+
