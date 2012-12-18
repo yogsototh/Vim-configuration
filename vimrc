@@ -325,6 +325,9 @@ imap èè `
 let NERDTreeIgnore=['\.o$','\~$','\.hi$']
 
 " --- Plugins ---
+" To install plugin the first time:
+" > vim +BundleInstall +qall
+" -----------
 filetype off
 set rtp+=~/.vim/vundle/vundle/
 call vundle#rc()
@@ -334,7 +337,6 @@ Bundle 'Twinside/vim-hoogle'
 filetype on
 
 " --- Plugin conf ---
-
 "  neocomplcache (advanced completion)
 let g:neocomplcache_enable_at_startup = 1
 
