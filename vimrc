@@ -7,7 +7,7 @@
 " > vim +BundleInstall +qall
 " -----------
 filetype off
-set rtp+=~/.vim/vundle/vundle/
+set rtp+=~/.vim/vundle/vundleinit/
 call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'L9'
