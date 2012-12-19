@@ -1,13 +1,20 @@
-" Maintainer: Yann Esposito
+" Yann Esposito
+" http://yannesposito.com
+" @yogsototh
 "
-" Inspired from a .vimrc file by
-" Bram Moolenaar <Bram@vim.org>
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
+" --- Plugins ---
+" To install plugin the first time:
+" > vim +BundleInstall +qall
+" -----------
+filetype off
+set rtp+=~/.vim/vundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+Bundle 'Twinside/vim-haskellFold'
+Bundle 'Twinside/vim-hoogle'
+filetype on
 
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -314,6 +321,7 @@ function! ToggleFocusMode()
 endfunc
 nnoremap <F6> :call ToggleFocusMode()<cr>
 
+" move between splits
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
@@ -324,17 +332,6 @@ imap èè `
 
 let NERDTreeIgnore=['\.o$','\~$','\.hi$']
 
-" --- Plugins ---
-" To install plugin the first time:
-" > vim +BundleInstall +qall
-" -----------
-filetype off
-set rtp+=~/.vim/vundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
-Bundle 'Twinside/vim-haskellFold'
-Bundle 'Twinside/vim-hoogle'
-filetype on
 
 " --- Plugin conf ---
 "  neocomplcache (advanced completion)
@@ -346,6 +343,10 @@ set term=screen-256color
 let g:solarized_termcolors=256
 se t_Co=256
 
+" FuzzyFinder
+let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|^cabal-dev'
+nmap ,f :FufCoverageFile<CR>
+nmap ,b :FufBuffer<CR>
 
 " -- Haskell
 au Bufenter *.hs compiler ghc
