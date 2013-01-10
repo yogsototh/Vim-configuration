@@ -353,3 +353,6 @@ au Bufenter *.hs compiler ghc
 au Bufenter *.lhs compiler ghc
 let g:haddock_browser="/usr/bin/firefox"
 
+
+" -- Elm
+au BufNewFile,BufRead *.elm set filetype=haskell
