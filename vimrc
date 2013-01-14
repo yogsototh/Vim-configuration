@@ -352,7 +352,8 @@ nmap ,b :FufBuffer<CR>
 au Bufenter *.hs compiler ghc
 au Bufenter *.lhs compiler ghc
 let g:haddock_browser="/usr/bin/firefox"
-
+let g:haddock_docdir="/usr/share/doc/ghc-doc/html/libraries/base-4.5.1.0"
+let g:ghc_pkg="/usr/bin/ghc-pkg"
 
 " -- Elm
 au BufNewFile,BufRead *.elm set filetype=haskell
