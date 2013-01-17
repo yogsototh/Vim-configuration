@@ -332,6 +332,9 @@ imap èè `
 
 let NERDTreeIgnore=['\.o$','\~$','\.hi$']
 
+" -- sudo save
+cmap w!! w !sudo tee >/dev/null %
+
 
 " --- Plugin conf ---
 "  neocomplcache (advanced completion)
@@ -352,4 +355,5 @@ nmap ,b :FufBuffer<CR>
 au Bufenter *.hs compiler ghc
 au Bufenter *.lhs compiler ghc
 let g:haddock_browser="/usr/bin/firefox"
+
 
