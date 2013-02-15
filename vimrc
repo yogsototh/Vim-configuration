@@ -355,5 +355,3 @@ nmap ,b :FufBuffer<CR>
 au Bufenter *.hs compiler ghc
 au Bufenter *.lhs compiler ghc
 let g:haddock_browser="/usr/bin/firefox"
-
-
