@@ -196,10 +196,14 @@ set incsearch
 syntax on;
 set gfn=Monospace\ 14
 
+set wrap
+:if  version >= 730
 " format
 " wrap lines and start the following lines by '→ '.
-set wrap
 set showbreak=→\
+:else
+let &showbreak='> '
+:endif
 set linebreak
 map j gj
 map k gk
@@ -298,8 +302,10 @@ command! -complete=command XcodeDebug call XcodeDebug()
 :noremap <left> :bp<CR>
 :noremap <right> :bn<CR>
 
+:if version >= 730
 " Colorize column 81
 :set colorcolumn=81
+:endif
 
 """ FocusMode
 function! ToggleFocusMode()
@@ -342,7 +348,7 @@ let g:neocomplcache_enable_at_startup = 1
 
 
 " set term=xterm-color
-set term=screen-256color
+set term=xterm-256color
 let g:solarized_termcolors=256
 se t_Co=256
 
