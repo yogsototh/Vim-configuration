@@ -14,6 +14,7 @@ Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'Twinside/vim-haskellFold'
 Bundle 'Twinside/vim-hoogle'
+Bundle 'airblade/vim-gitgutter'
 filetype on
 
 " Use Vim settings, rather then Vi settings (much better!).
@@ -361,3 +362,6 @@ nmap ,b :FufBuffer<CR>
 au Bufenter *.hs compiler ghc
 au Bufenter *.lhs compiler ghc
 let g:haddock_browser="/usr/bin/firefox"
+
+" -- vim-gitgutter
+highlight clear SignColumn
