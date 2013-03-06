@@ -12,8 +12,9 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
-Bundle 'Twinside/vim-haskellFold'
 Bundle 'Twinside/vim-hoogle'
+Bundle 'vim-pandoc/vim-pandoc'
+" Bundle 'Valloric/YouCompleteMe'
 filetype on
 
 " Use Vim settings, rather then Vi settings (much better!).
@@ -184,7 +185,7 @@ set noexpandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set smarttab
+set expandtab
 set autoindent
 set smartindent
 set cindent
