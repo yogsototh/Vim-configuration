@@ -199,21 +199,21 @@ syntax on;
 set gfn=Monospace\ 14
 
 set wrap
-:if  version >= 730
-" format
-" wrap lines and start the following lines by '→ '.
-set showbreak=→\
-:else
-let &showbreak='> '
-:endif
+if  version >= 730
+    " format
+    " wrap lines and start the following lines by '→ '.
+    set showbreak=→\
+else
+    let &showbreak='> '
+endif
 set linebreak
 map j gj
 map k gk
 
 " Auto indent by default
-:filetype indent on
+filetype indent on
 " Active plugins
-:filetype plugin on
+filetype plugin on
 " Type of F2 to reformat XML files
 map <F2> <Esc>:%!xmllint --format -<CR>
 
@@ -252,8 +252,8 @@ if has("spell")
    highlight SpellLocal term=underline cterm=underline
 endif
 
-:iab ccc <div><code class="zsh"><CR><CR></code></div><Esc>kA
-:iab èè `
+iab ccc <div><code class="zsh"><CR><CR></code></div><Esc>kA
+iab èè `
 
 " Very specific for my blog posts
 " Most people should delete this part
@@ -303,11 +303,6 @@ command! -complete=command XcodeDebug call XcodeDebug()
 :noremap <D-CR> :XcodeDebug<CR>
 :noremap <left> :bp<CR>
 :noremap <right> :bn<CR>
-
-:if version >= 730
-" Colorize column 81
-:set colorcolumn=81
-:endif
 
 """ FocusMode
 function! ToggleFocusMode()
@@ -366,3 +361,9 @@ let g:haddock_browser="/usr/bin/firefox"
 
 " -- vim-gitgutter
 highlight clear SignColumn
+
+" -- show the column 81
+if (exists('+colorcolumn'))
+    set colorcolumn=80
+endif
+
