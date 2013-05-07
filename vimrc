@@ -16,6 +16,7 @@ Bundle 'Twinside/vim-hoogle'
 Bundle 'vim-pandoc/vim-pandoc'
 " Bundle 'Valloric/YouCompleteMe'
 Bundle 'airblade/vim-gitgutter'
+" Bundle 'wincent/Command-T'
 filetype on
 
 " Use Vim settings, rather then Vi settings (much better!).
@@ -182,7 +183,6 @@ set enc=utf-8
 set termencoding=utf-8
 
 " Tabulation management
-set noexpandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
